@@ -102,10 +102,15 @@ class Slack(object):
         if token != _token:
             raise SlackError('Your token {} is invalid'.format(token))
 
-    def response(self, text):
-        """Return a response with 'text/plain; charset=utf-8' Content-Type
-
-        :param text: the text returned to the client
+    def response(self, payload, content_type='text/plain; charset=utf-8'):
+        """Return a response as:
+            if text, just a string "hi, i'm slackbot"
+            if json, payload can have the following values:
+                "response_type" - "in_channel" or "ephemeral"
+                "text" - see https://api.slack.com/docs/formatting
+                "attachments" - see https://api.slack.com/docs/attachments
+                
+        :param payload: text or json returned to client
         """
         from flask import Response
-        return Response(text, content_type='text/plain; charset=utf-8')
+        return Response(text, content_type=content_type)
