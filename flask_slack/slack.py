@@ -113,4 +113,4 @@ class Slack(object):
         :param payload: text or json returned to client
         """
         from flask import Response
-        return Response(text, content_type=content_type)
+        return Response(payload, content_type=content_type)
